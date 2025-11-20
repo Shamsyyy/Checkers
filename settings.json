@@ -1,7 +1,9 @@
 {
     "WindowSize": {
         "Width": 0,
-        "Hight": 0
+        "Hight": 0,
+        "Width_comment": "Ширина игрового окна (в пикселях).",
+        "Hight_comment": "Высота игрового окна (в пикселях)."
     },
     "Bot": {
         "IsWhiteBot": false,
@@ -11,9 +13,18 @@
         "BotScoringType": "NumberAndPotential",
         "BotDelayMS": 0,
         "NoRandom": false,
-        "Optimization": "O1"
+        "Optimization": "O1",
+        "IsWhiteBot_comment": "true — за белых играет бот; false — ходят вручную.",
+        "IsBlackBot_comment": "true — за чёрных играет бот; false — ходят вручную.",
+        "WhiteBotLevel_comment": "Уровень сложности бота за белых (максимальная глубина поиска).",
+        "BlackBotLevel_comment": "Уровень сложности бота за чёрных (максимальная глубина поиска).",
+        "BotScoringType_comment": "Режим оценки позиции: NumberOnly — только количество фигур; NumberAndPotential — с учётом продвижения к дамкам.",
+        "BotDelayMS_comment": "Задержка перед ходом бота в миллисекундах.",
+        "NoRandom_comment": "Если true — бот всегда выбирает один и тот же лучший ход (без случайности).",
+        "Optimization_comment": "Режим оптимизации поиска: O0 — без альфа-бета отсечений; O1 — с альфа-бета отсечениями."
     },
     "Game": {
-        "MaxNumTurns": 120
+        "MaxNumTurns": 120,
+        "MaxNumTurns_comment": "Максимальное количество ходов в партии; после превышения объявляется ничья."
     }
 }

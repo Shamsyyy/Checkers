@@ -5,13 +5,21 @@
 #include "../Models/Response.h"
 #include "Board.h"
 
-// methods for hands
+// Класс, отвечающий за "руку" игрока: обработку кликов мышью и
+// выбор клетки/кнопки (BACK/REPLAY/QUIT).
 class Hand
 {
   public:
     Hand(Board *board) : board(board)
     {
     }
+
+    // Ожидает, пока пользователь кликнет по окну.
+    // Возвращает:
+    //   - (Response::CELL, x, y)  — если клик был по клетке поля,
+    //   - (Response::BACK, -1, -1)   — если нажата кнопка "назад",
+    //   - (Response::REPLAY, -1, -1) — если нажата кнопка "сыграть ещё",
+    //   - (Response::QUIT, -1, -1)   — если закрыто окно.
     tuple<Response, POS_T, POS_T> get_cell() const
     {
         SDL_Event windowEvent;
@@ -64,6 +72,8 @@ class Hand
         return {resp, xc, yc};
     }
 
+    // Аналогично get_cell(), но используется на финальном экране:
+    // ждёт, пока пользователь нажмёт REPLAY или QUIT.
     Response wait() const
     {
         SDL_Event windowEvent;

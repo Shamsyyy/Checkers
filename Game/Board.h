@@ -6,6 +6,11 @@
 #include "../Models/Move.h"
 #include "../Models/Project_path.h"
 
+// Класс Board отвечает за работу с графическим полем:
+//  - создание и изменение окна SDL,
+//  - хранение состояния доски и фигур,
+//  - отрисовку клеток, фигур, возможных ходов и итогового экрана.
+
 #ifdef __APPLE__
     #include <SDL2/SDL.h>
     #include <SDL2/SDL_image.h>
@@ -366,10 +371,11 @@ private:
     int active_x = -1, active_y = -1;
     // game result if exist
     int game_results = -1;
-    // matrix of possible moves
+    // Матрица подсветки возможных ходов (true, если клетка подсвечена как доступная).
     vector<vector<bool>> is_highlighted_ = vector<vector<bool>>(8, vector<bool>(8, 0));
-    // matrix of possible moves
-    // 1 - white, 2 - black, 3 - white queen, 4 - black queen
+    // Матрица фигур на доске:
+    // 0 - пусто, 1 - белая шашка, 2 - чёрная шашка,
+    // 3 - белая дамка, 4 - чёрная дамка
     vector<vector<POS_T>> mtx = vector<vector<POS_T>>(8, vector<POS_T>(8, 0));
     // series of beats for each move
     vector<int> history_beat_series;

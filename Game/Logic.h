@@ -19,6 +19,8 @@ class Logic
         optimization = (*config)("Bot", "Optimization");
     }
 
+    // Главная функция поиска лучшего хода для бота.
+    // Возвращает последовательность ходов (возможна серия взятий) для заданного цвета.
     vector<move_pos> find_best_turns(const bool color)
     {
         next_best_state.clear();
@@ -37,6 +39,8 @@ class Logic
     }
 
 private:
+    // Применяет один ход turn к копии матрицы mtx и возвращает новую матрицу.
+    // Используется внутри минимакса, чтобы просчитывать варианты, не меняя реальную доску.
     vector<vector<POS_T>> make_turn(vector<vector<POS_T>> mtx, move_pos turn) const
     {
         if (turn.xb != -1)
@@ -48,6 +52,9 @@ private:
         return mtx;
     }
 
+    // Оценивает позицию с точки зрения бота.
+    // mtx — матрица с расположением фигур,
+    // first_bot_color = true, если "максимизирующий" игрок — первый цвет (белые).
     double calc_score(const vector<vector<POS_T>> &mtx, const bool first_bot_color) const
     {
         // color - who is max player
@@ -215,6 +222,8 @@ private:
         have_beats = have_beats_before;
     }
 
+    // Внутренняя версия поиска ходов для одной фигуры (x, y) на матрице mtx.
+    // Сначала ищет обязательные взятия, и только если их нет — обычные ходы.
     void find_turns(const POS_T x, const POS_T y, const vector<vector<POS_T>> &mtx)
     {
         turns.clear();
@@ -306,16 +315,27 @@ private:
     }
 
   public:
+    // Вектор всех возможных ходов для текущего состояния доски.
     vector<move_pos> turns;
+    // Флаг: есть ли среди найденных ходов хотя бы одно взятие.
     bool have_beats;
+    // Максимальная глубина поиска для алгоритма минимакс (уровень сложности бота).
     int Max_depth;
 
   private:
+    // Генератор случайных чисел: используется для перемешивания ходов
+    // и более "живого" поведения бота при равных оценках.
     default_random_engine rand_eng;
+    // Режим оценки позиции (берётся из settings.json):
+    // например, "NumberOnly" или "NumberAndPotential".
     string scoring_mode;
+    // Режим оптимизации (O0 — без альфа-бета-отсечений, O1 — с отсечениями).
     string optimization;
+    // next_move[state] — какой ход нужно сделать из состояния с номером state.
     vector<move_pos> next_move;
+    // next_best_state[state] — номер следующего состояния после выполнения хода.
     vector<int> next_best_state;
+    // Указатели на доску и конфиг, с которыми работает логика.
     Board *board;
     Config *config;
 };
